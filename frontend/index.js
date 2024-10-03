@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nextMonthBtn = document.getElementById('next-month');
     const currentMonthYearSpan = document.getElementById('current-month-year');
 
-    let currentDate = new Date(2024, 0, 1); // Start with January 2024
+    let currentDate;
     let homeworkData = [];
 
     // Load all homework on page load
@@ -39,7 +39,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function loadHomework() {
         homeworkData = await backend.getAllHomework();
         displayHomework();
+        setInitialDate();
         renderCalendar();
+    }
+
+    function setInitialDate() {
+        if (homeworkData.length > 0) {
+            const earliestDueDate = homeworkData.reduce((earliest, hw) => {
+                const dueDate = new Date(Number(hw.dueDate));
+                return dueDate < earliest ? dueDate : earliest;
+            }, new Date(Number(homeworkData[0].dueDate)));
+            currentDate = new Date(earliestDueDate.getFullYear(), earliestDueDate.getMonth(), 1);
+        } else {
+            currentDate = new Date();
+        }
     }
 
     function displayHomework() {
@@ -162,7 +175,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         await backend.deleteHomework(id);
         await loadHomework();
     };
-
-    // Initial render
-    renderCalendar();
 });
