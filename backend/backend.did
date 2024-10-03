@@ -1,0 +1,14 @@
+type Homework = 
+ record {
+   description: text;
+   dueDate: int;
+   id: nat;
+   title: text;
+ };
+service : {
+  addHomework: (text, text, int) -> (nat);
+  deleteHomework: (nat) -> (bool);
+  getAllHomework: () -> (vec Homework) query;
+  getHomework: (nat) -> (opt Homework) query;
+  updateHomework: (nat, text, text, int) -> (bool);
+}
