@@ -13,6 +13,7 @@ actor {
     id: Nat;
     title: Text;
     description: Text;
+    assignedDate: Int;
     dueDate: Int;
   };
 
@@ -21,12 +22,13 @@ actor {
   stable var homeworks : [Homework] = [];
 
   // Add a new homework assignment
-  public func addHomework(title: Text, description: Text, dueDate: Int) : async Nat {
+  public func addHomework(title: Text, description: Text, assignedDate: Int, dueDate: Int) : async Nat {
     let id = homeworkCounter;
     let homework : Homework = {
       id;
       title;
       description;
+      assignedDate;
       dueDate;
     };
     homeworks := Array.append(homeworks, [homework]);
@@ -45,13 +47,14 @@ actor {
   };
 
   // Update a homework assignment
-  public func updateHomework(id: Nat, title: Text, description: Text, dueDate: Int) : async Bool {
+  public func updateHomework(id: Nat, title: Text, description: Text, assignedDate: Int, dueDate: Int) : async Bool {
     homeworks := Array.map(homeworks, func (hw: Homework) : Homework {
       if (hw.id == id) {
         return {
           id = hw.id;
           title = title;
           description = description;
+          assignedDate = assignedDate;
           dueDate = dueDate;
         };
       };

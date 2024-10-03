@@ -18,9 +18,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         e.preventDefault();
         const title = document.getElementById('title').value;
         const description = document.getElementById('description').value;
+        const assignedDate = new Date(document.getElementById('assigned-date').value).getTime();
         const dueDate = new Date(document.getElementById('due-date').value).getTime();
 
-        await backend.addHomework(title, description, BigInt(dueDate));
+        await backend.addHomework(title, description, BigInt(assignedDate), BigInt(dueDate));
         homeworkForm.reset();
         await loadHomework();
     });
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             li.innerHTML = `
                 <h3>${hw.title}</h3>
                 <p>${hw.description}</p>
+                <p>Assigned: ${formatDate(new Date(Number(hw.assignedDate)))}</p>
                 <p>Due: ${formatDate(new Date(Number(hw.dueDate)))}</p>
                 <button onclick="deleteHomework(${hw.id})">Delete</button>
             `;
@@ -108,6 +110,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     assignmentItem.innerHTML = `
                         <strong>${assignment.title}</strong>
                         <p class="homework-description">${assignment.description}</p>
+                        <p class="homework-dates">
+                            Assigned: ${formatDate(new Date(Number(assignment.assignedDate)))}<br>
+                            Due: ${formatDate(new Date(Number(assignment.dueDate)))}
+                        </p>
                     `;
                     assignmentList.appendChild(assignmentItem);
                 });
@@ -133,8 +139,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function getAssignmentsForDate(date) {
         return homeworkData.filter(hw => {
-            const hwDate = new Date(Number(hw.dueDate));
-            return hwDate.toDateString() === date.toDateString();
+            const assignedDate = new Date(Number(hw.assignedDate));
+            const dueDate = new Date(Number(hw.dueDate));
+            return (assignedDate.toDateString() === date.toDateString() || 
+                    dueDate.toDateString() === date.toDateString());
         });
     }
 
