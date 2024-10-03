@@ -204,11 +204,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('edit-id').value = homework.id;
             document.getElementById('edit-title').value = homework.title;
             document.getElementById('edit-description').value = homework.description;
-            document.getElementById('edit-assigned-date').value = new Date(Number(homework.assignedDate)).toISOString().split('T')[0];
-            document.getElementById('edit-due-date').value = new Date(Number(homework.dueDate)).toISOString().split('T')[0];
+            document.getElementById('edit-assigned-date').value = formatDateForInput(new Date(Number(homework.assignedDate)));
+            document.getElementById('edit-due-date').value = formatDateForInput(new Date(Number(homework.dueDate)));
             editModal.style.display = 'block';
         }
     };
+
+    function formatDateForInput(date) {
+        return date.toISOString().split('T')[0];
+    }
 
     window.deleteHomework = async (id) => {
         await backend.deleteHomework(id);

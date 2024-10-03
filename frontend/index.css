@@ -166,6 +166,8 @@ li {
     border: 1px solid #888;
     width: 80%;
     max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .close {
@@ -173,11 +175,38 @@ li {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: #000;
     text-decoration: none;
+}
+
+#edit-homework-form {
+    margin-top: 20px;
+}
+
+#edit-homework-form input,
+#edit-homework-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#edit-homework-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+}
+
+#edit-homework-form button:hover {
+    background-color: #45a049;
 }
