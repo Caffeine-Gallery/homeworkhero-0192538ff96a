@@ -184,10 +184,28 @@ li {
     text-decoration: none;
 }
 
-#edit-homework-form {
+#add-homework-btn {
+    display: block;
+    margin: 0 auto 2rem;
+    font-size: 1.1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#add-homework-btn:hover {
+    background-color: #45a049;
+}
+
+#homework-form, #edit-homework-form {
     margin-top: 20px;
 }
 
+#homework-form input,
+#homework-form textarea,
 #edit-homework-form input,
 #edit-homework-form textarea {
     width: 100%;
@@ -197,6 +215,7 @@ li {
     border-radius: 4px;
 }
 
+#homework-form button,
 #edit-homework-form button {
     width: 100%;
     padding: 10px;
@@ -207,6 +226,7 @@ li {
     cursor: pointer;
 }
 
+#homework-form button:hover,
 #edit-homework-form button:hover {
     background-color: #45a049;
 }

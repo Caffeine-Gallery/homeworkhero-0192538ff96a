@@ -1,21 +1,27 @@
 import { backend } from 'declarations/backend';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const addHomeworkBtn = document.getElementById('add-homework-btn');
     const homeworkForm = document.getElementById('homework-form');
     const homeworkList = document.getElementById('homework-items');
     const calendarView = document.getElementById('calendar-view');
     const prevMonthBtn = document.getElementById('prev-month');
     const nextMonthBtn = document.getElementById('next-month');
     const currentMonthYearSpan = document.getElementById('current-month-year');
+    const addModal = document.getElementById('add-modal');
     const editModal = document.getElementById('edit-modal');
     const editForm = document.getElementById('edit-homework-form');
-    const closeModal = document.querySelector('.close');
+    const closeButtons = document.querySelectorAll('.close');
 
     let currentDate;
     let homeworkData = [];
 
     // Load all homework on page load
     await loadHomework();
+
+    addHomeworkBtn.addEventListener('click', () => {
+        addModal.style.display = 'block';
+    });
 
     homeworkForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -26,6 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         await backend.addHomework(title, description, BigInt(assignedDate), BigInt(dueDate));
         homeworkForm.reset();
+        addModal.style.display = 'none';
         await loadHomework();
     });
 
@@ -42,13 +49,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         await loadHomework();
     });
 
-    closeModal.onclick = () => {
-        editModal.style.display = 'none';
-    };
+    closeButtons.forEach(button => {
+        button.onclick = function() {
+            this.closest('.modal').style.display = 'none';
+        }
+    });
 
     window.onclick = (event) => {
-        if (event.target == editModal) {
-            editModal.style.display = 'none';
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
         }
     };
 

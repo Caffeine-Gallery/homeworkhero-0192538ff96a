@@ -11,18 +11,7 @@
         <h1>Eli's Homework Manager</h1>
     </header>
     <main>
-        <section id="add-homework">
-            <h2>Add New Homework</h2>
-            <form id="homework-form">
-                <input type="text" id="title" placeholder="Title" required>
-                <textarea id="description" placeholder="Description" required></textarea>
-                <label for="assigned-date">Assigned Date (MM/DD/YYYY):</label>
-                <input type="date" id="assigned-date" required>
-                <label for="due-date">Due Date (MM/DD/YYYY):</label>
-                <input type="date" id="due-date" required>
-                <button type="submit">Add Homework</button>
-            </form>
-        </section>
+        <button id="add-homework-btn">Add Homework</button>
         <section id="homework-list">
             <h2>Current Homework</h2>
             <ul id="homework-items"></ul>
@@ -37,6 +26,21 @@
             <div id="calendar-view"></div>
         </section>
     </main>
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Homework</h2>
+            <form id="homework-form">
+                <input type="text" id="title" placeholder="Title" required>
+                <textarea id="description" placeholder="Description" required></textarea>
+                <label for="assigned-date">Assigned Date (MM/DD/YYYY):</label>
+                <input type="date" id="assigned-date" required>
+                <label for="due-date">Due Date (MM/DD/YYYY):</label>
+                <input type="date" id="due-date" required>
+                <button type="submit">Add Homework</button>
+            </form>
+        </div>
+    </div>
     <div id="edit-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
