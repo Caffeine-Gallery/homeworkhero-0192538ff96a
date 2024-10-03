@@ -200,14 +200,12 @@ li {
     background-color: #45a049;
 }
 
-#homework-form, #edit-homework-form {
+#homework-form {
     margin-top: 20px;
 }
 
 #homework-form input,
-#homework-form textarea,
-#edit-homework-form input,
-#edit-homework-form textarea {
+#homework-form textarea {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -215,8 +213,7 @@ li {
     border-radius: 4px;
 }
 
-#homework-form button,
-#edit-homework-form button {
+#homework-form button {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
@@ -226,7 +223,6 @@ li {
     cursor: pointer;
 }
 
-#homework-form button:hover,
-#edit-homework-form button:hover {
+#homework-form button:hover {
     background-color: #45a049;
 }

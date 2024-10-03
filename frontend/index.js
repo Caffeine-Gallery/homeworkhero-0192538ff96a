@@ -8,56 +8,48 @@ document.addEventListener('DOMContentLoaded', async () => {
     const prevMonthBtn = document.getElementById('prev-month');
     const nextMonthBtn = document.getElementById('next-month');
     const currentMonthYearSpan = document.getElementById('current-month-year');
-    const addModal = document.getElementById('add-modal');
-    const editModal = document.getElementById('edit-modal');
-    const editForm = document.getElementById('edit-homework-form');
-    const closeButtons = document.querySelectorAll('.close');
+    const homeworkModal = document.getElementById('homework-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const submitBtn = document.getElementById('submit-btn');
+    const closeButton = document.querySelector('.close');
 
     let currentDate;
     let homeworkData = [];
+    let isEditing = false;
 
     // Load all homework on page load
     await loadHomework();
 
     addHomeworkBtn.addEventListener('click', () => {
-        addModal.style.display = 'block';
+        openModal();
     });
 
     homeworkForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const id = document.getElementById('homework-id').value;
         const title = document.getElementById('title').value;
         const description = document.getElementById('description').value;
         const assignedDate = new Date(document.getElementById('assigned-date').value).getTime();
         const dueDate = new Date(document.getElementById('due-date').value).getTime();
 
-        await backend.addHomework(title, description, BigInt(assignedDate), BigInt(dueDate));
-        homeworkForm.reset();
-        addModal.style.display = 'none';
-        await loadHomework();
-    });
-
-    editForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const id = Number(document.getElementById('edit-id').value);
-        const title = document.getElementById('edit-title').value;
-        const description = document.getElementById('edit-description').value;
-        const assignedDate = new Date(document.getElementById('edit-assigned-date').value).getTime();
-        const dueDate = new Date(document.getElementById('edit-due-date').value).getTime();
-
-        await backend.updateHomework(id, title, description, BigInt(assignedDate), BigInt(dueDate));
-        editModal.style.display = 'none';
-        await loadHomework();
-    });
-
-    closeButtons.forEach(button => {
-        button.onclick = function() {
-            this.closest('.modal').style.display = 'none';
+        if (isEditing) {
+            await backend.updateHomework(Number(id), title, description, BigInt(assignedDate), BigInt(dueDate));
+        } else {
+            await backend.addHomework(title, description, BigInt(assignedDate), BigInt(dueDate));
         }
+
+        homeworkForm.reset();
+        homeworkModal.style.display = 'none';
+        await loadHomework();
     });
+
+    closeButton.onclick = () => {
+        homeworkModal.style.display = 'none';
+    };
 
     window.onclick = (event) => {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = 'none';
+        if (event.target === homeworkModal) {
+            homeworkModal.style.display = 'none';
         }
     };
 
@@ -211,23 +203,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         return date.toISOString().split('T')[0];
     }
 
+    function openModal(homework = null) {
+        isEditing = !!homework;
+        modalTitle.textContent = isEditing ? 'Edit Homework' : 'Add New Homework';
+        submitBtn.textContent = isEditing ? 'Update Homework' : 'Add Homework';
+
+        if (isEditing) {
+            document.getElementById('homework-id').value = homework.id;
+            document.getElementById('title').value = homework.title;
+            document.getElementById('description').value = homework.description;
+            document.getElementById('assigned-date').value = formatDateForInput(new Date(Number(homework.assignedDate)));
+            document.getElementById('due-date').value = formatDateForInput(new Date(Number(homework.dueDate)));
+        } else {
+            homeworkForm.reset();
+        }
+
+        homeworkModal.style.display = 'block';
+    }
+
     window.deleteHomework = async (id) => {
         await backend.deleteHomework(id);
         await loadHomework();
     };
 
     window.editHomework = (id) => {
-        console.log('Edit button clicked for homework id:', id);
         const homework = homeworkData.find(hw => hw.id === id);
         if (homework) {
-            console.log('Homework found:', homework);
-            document.getElementById('edit-id').value = homework.id;
-            document.getElementById('edit-title').value = homework.title;
-            document.getElementById('edit-description').value = homework.description;
-            document.getElementById('edit-assigned-date').value = formatDateForInput(new Date(Number(homework.assignedDate)));
-            document.getElementById('edit-due-date').value = formatDateForInput(new Date(Number(homework.dueDate)));
-            editModal.style.display = 'block';
-            console.log('Edit modal should be displayed now');
+            openModal(homework);
         } else {
             console.error('Homework not found for id:', id);
         }
