@@ -198,18 +198,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return months[monthIndex];
     }
 
-    window.editHomework = (id) => {
-        const homework = homeworkData.find(hw => hw.id === id);
-        if (homework) {
-            document.getElementById('edit-id').value = homework.id;
-            document.getElementById('edit-title').value = homework.title;
-            document.getElementById('edit-description').value = homework.description;
-            document.getElementById('edit-assigned-date').value = formatDateForInput(new Date(Number(homework.assignedDate)));
-            document.getElementById('edit-due-date').value = formatDateForInput(new Date(Number(homework.dueDate)));
-            editModal.style.display = 'block';
-        }
-    };
-
     function formatDateForInput(date) {
         return date.toISOString().split('T')[0];
     }
@@ -217,5 +205,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.deleteHomework = async (id) => {
         await backend.deleteHomework(id);
         await loadHomework();
+    };
+
+    // Make editHomework function global
+    window.editHomework = (id) => {
+        console.log('Edit button clicked for homework id:', id);
+        const homework = homeworkData.find(hw => hw.id === id);
+        if (homework) {
+            console.log('Homework found:', homework);
+            document.getElementById('edit-id').value = homework.id;
+            document.getElementById('edit-title').value = homework.title;
+            document.getElementById('edit-description').value = homework.description;
+            document.getElementById('edit-assigned-date').value = formatDateForInput(new Date(Number(homework.assignedDate)));
+            document.getElementById('edit-due-date').value = formatDateForInput(new Date(Number(homework.dueDate)));
+            editModal.style.display = 'block';
+            console.log('Edit modal should be displayed now');
+        } else {
+            console.error('Homework not found for id:', id);
+        }
     };
 });
