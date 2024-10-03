@@ -207,7 +207,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         await loadHomework();
     };
 
-    // Make editHomework function global
     window.editHomework = (id) => {
         console.log('Edit button clicked for homework id:', id);
         const homework = homeworkData.find(hw => hw.id === id);
