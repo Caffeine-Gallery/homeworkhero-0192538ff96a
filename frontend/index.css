@@ -15,7 +15,7 @@ header {
 
 main {
     padding: 2rem;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -65,72 +65,64 @@ li {
     margin-bottom: 1rem;
 }
 
-#agenda-items div {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-
-#agenda-view-toggle {
+#calendar-navigation {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
 }
 
-#agenda-view-toggle button {
-    margin: 0 0.5rem;
-}
-
-#agenda-view-toggle button.active {
-    background-color: #555;
-}
-
-.hidden {
-    display: none;
+#current-month-year {
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 #calendar-view {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
-
-.calendar-day {
-    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
     border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 0.5rem;
+}
+
+.calendar-row {
+    display: flex;
+}
+
+.calendar-cell {
+    flex: 1;
     min-height: 100px;
+    border: 1px solid #eee;
+    padding: 5px;
+    text-align: right;
 }
 
-.calendar-day .date {
+.calendar-cell.header {
+    background-color: #f0f0f0;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    text-align: center;
+    min-height: auto;
+    padding: 10px 5px;
 }
 
-.calendar-homework {
-    background-color: #e6f3ff;
-    border-radius: 3px;
-    padding: 0.25rem;
-    margin-bottom: 0.25rem;
-    font-size: 0.8rem;
-}
-
-.agenda-item {
+.calendar-cell.empty {
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 1rem;
-    margin-bottom: 1rem;
 }
 
-.agenda-item h3 {
-    margin-top: 0;
-    color: #333;
+.calendar-cell.has-assignments {
+    background-color: #e6f3ff;
 }
 
-.agenda-item p {
-    margin: 0.5rem 0;
+.calendar-cell ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.calendar-cell li {
+    background-color: #d4e9ff;
+    border-radius: 3px;
+    padding: 2px 4px;
+    margin-bottom: 2px;
 }
