@@ -90,10 +90,11 @@ li {
 
 .calendar-cell {
     flex: 1;
-    min-height: 100px;
+    min-height: 120px;
     border: 1px solid #eee;
     padding: 5px;
     text-align: right;
+    overflow-y: auto;
 }
 
 .calendar-cell.header {
@@ -123,6 +124,19 @@ li {
 .calendar-cell li {
     background-color: #d4e9ff;
     border-radius: 3px;
-    padding: 2px 4px;
+    padding: 4px;
+    margin-bottom: 4px;
+}
+
+.calendar-cell li strong {
+    display: block;
     margin-bottom: 2px;
+}
+
+.homework-description {
+    font-size: 0.7rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

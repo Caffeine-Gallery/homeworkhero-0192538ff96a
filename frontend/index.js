@@ -105,7 +105,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const assignmentList = document.createElement('ul');
                 assignments.forEach(assignment => {
                     const assignmentItem = document.createElement('li');
-                    assignmentItem.textContent = assignment.title;
+                    assignmentItem.innerHTML = `
+                        <strong>${assignment.title}</strong>
+                        <p class="homework-description">${assignment.description}</p>
+                    `;
                     assignmentList.appendChild(assignmentItem);
                 });
                 cell.appendChild(assignmentList);
