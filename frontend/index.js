@@ -64,10 +64,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     async function loadHomework() {
-        homeworkData = await backend.getAllHomework();
-        displayHomework();
-        setInitialDate();
-        renderCalendar();
+        try {
+            homeworkData = await backend.getAllHomework();
+            console.log('Loaded homework data:', homeworkData);
+            displayHomework();
+            setInitialDate();
+            renderCalendar();
+        } catch (error) {
+            console.error('Error loading homework:', error);
+            alert('Failed to load homework. Please try refreshing the page.');
+        }
     }
 
     function setInitialDate() {
@@ -222,16 +228,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     window.deleteHomework = async (id) => {
-        await backend.deleteHomework(id);
-        await loadHomework();
+        try {
+            await backend.deleteHomework(id);
+            await loadHomework();
+        } catch (error) {
+            console.error('Error deleting homework:', error);
+            alert('Failed to delete homework. Please try again.');
+        }
     };
 
     window.editHomework = (id) => {
-        const homework = homeworkData.find(hw => hw.id === id);
+        console.log('Edit homework called with id:', id);
+        const homework = homeworkData.find(hw => Number(hw.id) === Number(id));
+        console.log('Found homework:', homework);
         if (homework) {
             openModal(homework);
         } else {
             console.error('Homework not found for id:', id);
+            alert('Error: Homework not found. Please try refreshing the page.');
         }
     };
 });
