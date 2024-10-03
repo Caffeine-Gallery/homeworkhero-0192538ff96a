@@ -72,3 +72,65 @@ li {
     padding: 1rem;
     margin-bottom: 1rem;
 }
+
+#agenda-view-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+#agenda-view-toggle button {
+    margin: 0 0.5rem;
+}
+
+#agenda-view-toggle button.active {
+    background-color: #555;
+}
+
+.hidden {
+    display: none;
+}
+
+#calendar-view {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-day {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.5rem;
+    min-height: 100px;
+}
+
+.calendar-day .date {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.calendar-homework {
+    background-color: #e6f3ff;
+    border-radius: 3px;
+    padding: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+}
+
+.agenda-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.agenda-item h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.agenda-item p {
+    margin: 0.5rem 0;
+}
