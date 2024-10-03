@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const prevMonthBtn = document.getElementById('prev-month');
     const nextMonthBtn = document.getElementById('next-month');
     const currentMonthYearSpan = document.getElementById('current-month-year');
+    const editModal = document.getElementById('edit-modal');
+    const editForm = document.getElementById('edit-homework-form');
+    const closeModal = document.querySelector('.close');
 
     let currentDate;
     let homeworkData = [];
@@ -25,6 +28,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         homeworkForm.reset();
         await loadHomework();
     });
+
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = Number(document.getElementById('edit-id').value);
+        const title = document.getElementById('edit-title').value;
+        const description = document.getElementById('edit-description').value;
+        const assignedDate = new Date(document.getElementById('edit-assigned-date').value).getTime();
+        const dueDate = new Date(document.getElementById('edit-due-date').value).getTime();
+
+        await backend.updateHomework(id, title, description, BigInt(assignedDate), BigInt(dueDate));
+        editModal.style.display = 'none';
+        await loadHomework();
+    });
+
+    closeModal.onclick = () => {
+        editModal.style.display = 'none';
+    };
+
+    window.onclick = (event) => {
+        if (event.target == editModal) {
+            editModal.style.display = 'none';
+        }
+    };
 
     prevMonthBtn.addEventListener('click', () => {
         currentDate.setMonth(currentDate.getMonth() - 1);
@@ -64,6 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p>${hw.description}</p>
                 <p>Assigned: ${formatDate(new Date(Number(hw.assignedDate)))}</p>
                 <p>Due: ${formatDate(new Date(Number(hw.dueDate)))}</p>
+                <button onclick="editHomework(${hw.id})">Edit</button>
                 <button onclick="deleteHomework(${hw.id})">Delete</button>
             `;
             homeworkList.appendChild(li);
@@ -170,6 +197,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         return months[monthIndex];
     }
+
+    window.editHomework = (id) => {
+        const homework = homeworkData.find(hw => hw.id === id);
+        if (homework) {
+            document.getElementById('edit-id').value = homework.id;
+            document.getElementById('edit-title').value = homework.title;
+            document.getElementById('edit-description').value = homework.description;
+            document.getElementById('edit-assigned-date').value = new Date(Number(homework.assignedDate)).toISOString().split('T')[0];
+            document.getElementById('edit-due-date').value = new Date(Number(homework.dueDate)).toISOString().split('T')[0];
+            editModal.style.display = 'block';
+        }
+    };
 
     window.deleteHomework = async (id) => {
         await backend.deleteHomework(id);
