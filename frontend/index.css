@@ -13,6 +13,22 @@ header {
     padding: 1rem;
 }
 
+.hero {
+    background-image: url('https://homework.sg/wp-content/uploads/2019/08/why-writing-notes-by-hand-is-better-than-typing.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero h1 {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
 main {
     padding: 2rem;
     max-width: 1000px;
